@@ -1,0 +1,1960 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Menu | Arami Cafe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #fffaf5;
+        --cream: #fff5eb;
+        --coffee-dark: #4a2c2a;
+        --crust-gold: #e2a13c;
+        --crust-gold-dark: #c57f2e;
+        --warm-brown: #7a4b3a;
+        --text-dark: #2c1a10;
+        --text-soft: #6b4f3a;
+        --card-white: #ffffff;
+        --shadow-sm: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 25px 40px -12px rgba(0, 0, 0, 0.15);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--bg);
+        color: var(--text-dark);
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      .logo,
+      .hero-badge {
+        font-family: "Playfair Display", serif;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(255, 250, 245, 0.94);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(74, 44, 42, 0.12);
+        transition: box-shadow 0.3s;
+      }
+      nav.scrolled {
+        box-shadow: 0 2px 18px rgba(0, 0, 0, 0.04);
+      }
+      .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+      }
+      .logo {
+        font-size: 1.65rem;
+        font-weight: 700;
+        color: var(--coffee-dark);
+        letter-spacing: -0.3px;
+      }
+      .logo span {
+        color: var(--crust-gold);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-soft);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--crust-gold);
+      }
+      .nav-cta {
+        background: var(--crust-gold);
+        color: #2c1a10 !important;
+        padding: 0.5rem 1.5rem;
+        border-radius: 40px;
+        font-weight: 600;
+      }
+      .nav-cta:hover {
+        background: var(--crust-gold-dark);
+        color: white !important;
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      .hamburger span {
+        width: 24px;
+        height: 2px;
+        background: var(--coffee-dark);
+        border-radius: 2px;
+      }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        z-index: 99;
+        padding: 1.5rem 5%;
+        flex-direction: column;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(74, 44, 42, 0.1);
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-soft);
+        text-decoration: none;
+        padding: 0.5rem 0;
+      }
+
+      /* Header Section */
+      .menu-header {
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 120px 5% 80px;
+        background: linear-gradient(135deg, #2c1a10 0%, #4a2c2a 100%);
+        color: white;
+        text-align: center;
+      }
+      .menu-header h1 {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        margin-bottom: 1rem;
+      }
+      .menu-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Category Navigation */
+      .category-nav {
+        position: sticky;
+        top: 72px;
+        background: var(--card-white);
+        border-bottom: 2px solid var(--cream);
+        z-index: 50;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+      }
+      .category-nav-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.8rem 5%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .category-btn {
+        padding: 0.6rem 1.5rem;
+        border: 2px solid transparent;
+        background: var(--cream);
+        color: var(--coffee-dark);
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .category-btn:hover,
+      .category-btn.active {
+        background: var(--crust-gold);
+        color: white;
+        border-color: var(--crust-gold-dark);
+      }
+
+      /* Sections */
+      section {
+        padding: 5rem 5%;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .category-section {
+        margin-bottom: 5rem;
+        scroll-margin-top: 200px;
+      }
+      .category-title {
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-family: "Playfair Display", serif;
+        color: var(--coffee-dark);
+        margin-bottom: 0.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid var(--crust-gold);
+        display: inline-block;
+      }
+      .category-desc {
+        color: var(--text-soft);
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+      }
+
+      /* Menu Grid */
+      .full-menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+      .menu-item-card {
+        background: var(--card-white);
+        border-radius: 24px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+      }
+      .menu-item-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+      }
+      .menu-item-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+      .menu-item-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .menu-item-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--coffee-dark);
+        margin-bottom: 0.5rem;
+      }
+      .menu-item-desc {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+      }
+      .menu-item-price {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--crust-gold-dark);
+        background: rgba(226, 161, 60, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 30px;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+
+      .menu-item-footer {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        margin-top: auto;
+      }
+
+      .add-to-cart-btn {
+        flex: 1;
+        background: var(--crust-gold);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .add-to-cart-btn:hover {
+        background: var(--crust-gold-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(226, 161, 60, 0.3);
+      }
+
+      .add-to-cart-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Back Button */
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        padding: 0.6rem 1.5rem;
+        background: var(--cream);
+        color: var(--coffee-dark);
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+      }
+      .back-btn:hover {
+        background: var(--crust-gold);
+        color: white;
+      }
+
+      footer {
+        background: var(--coffee-dark);
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 245, 235, 0.7);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .full-menu-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 1.5rem;
+        }
+      }
+      @media (max-width: 600px) {
+        .menu-header {
+          min-height: 40vh;
+          padding: 100px 5% 60px;
+        }
+        .category-nav-inner {
+          gap: 0.3rem;
+        }
+        .category-btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.75rem;
+        }
+        .full-menu-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="nav-container">
+        <a href="arami.html" class="logo">Arami <span>Cafe</span></a>
+        <ul class="nav-links">
+          <li><a href="arami.html#about">About</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="arami.html#gallery">Gallery</a></li>
+          <li><a href="arami.html#testimonials">Reviews</a></li>
+          <li><a href="cart-page.html" class="nav-cta">🛒 Cart</a></li>
+        </ul>
+        <button class="hamburger" id="hamburgerBtn">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="arami.html#about">About</a>
+      <a href="menu.html">Menu</a>
+      <a href="arami.html#gallery">Gallery</a>
+      <a href="arami.html#testimonials">Reviews</a>
+      <a href="cart-page.html">🛒 Cart</a>
+    </div>
+
+    <!-- Header -->
+    <section class="menu-header">
+      <div class="container">
+        <h1>🍽️ Full Menu</h1>
+        <p>
+          Explore our complete collection of delicious dishes, fresh
+          ingredients, and signature items
+        </p>
+      </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <div class="category-nav">
+      <div class="category-nav-inner">
+        <a href="#breakfast" class="category-btn active">🥞 Breakfast</a>
+        <a href="#pasta" class="category-btn">🍝 Pasta</a>
+        <a href="#main" class="category-btn">🍖 Main</a>
+        <a href="#burgers" class="category-btn">🍔 Burgers</a>
+        <a href="#salad" class="category-btn">🥗 Salad</a>
+        <a href="#wraps" class="category-btn">🌯 Wraps</a>
+        <a href="#noodles" class="category-btn">🍜 Noodles</a>
+        <a href="#sides" class="category-btn">🍟 Sides</a>
+        <a href="#beverage" class="category-btn">☕ Beverages</a>
+        <a href="#drinks" class="category-btn">🍹 Drinks</a>
+        <a href="#sandwich" class="category-btn">🥪 Sandwich</a>
+        <a href="#shakes" class="category-btn">🥤 Shakes</a>
+        <a href="#cocktails" class="category-btn">🍸 Cocktails</a>
+      </div>
+    </div>
+
+    <!-- Main Menu Content -->
+    <section>
+      <div class="container">
+        <a href="arami.html" class="back-btn">← Back to Home</a>
+
+        <!-- BREAKFAST -->
+        <div id="breakfast" class="category-section">
+          <h2 class="category-title">🥞 Breakfast</h2>
+          <p class="category-desc">
+            Start your day right with our delicious breakfast options
+          </p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="image(2)/images%20(2).jpg"
+                alt="Crepe & Syrup"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Crepe & Syrup</div>
+                <div class="menu-item-desc">Classic Crepe with Syrup</div>
+                <div class="menu-item-price">₦5,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download.jpg"
+                alt="Crispy Chicken & Pancakes"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Crispy Chicken & Pancakes</div>
+                <div class="menu-item-desc">
+                  Battered Chicken Breast & Butter Milk Pancake
+                </div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(1).jpg"
+                alt="English Breakfast"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">English Breakfast</div>
+                <div class="menu-item-desc">
+                  Toast, Egg, Bacon, Sausage, Baked Beans
+                </div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(4).jpg"
+                alt="French Toast Breakfast"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">French Toast Breakfast</div>
+                <div class="menu-item-desc">
+                  Golden bread with sweet toppings and syrup
+                </div>
+                <div class="menu-item-price">₦13,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(3).jpg"
+                alt="Hot Crust Big Breakfast"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Hot Crust Big Breakfast</div>
+                <div class="menu-item-desc">
+                  Pancake, Eggs, Bacon, Sausage, Baked Beans, Mushroom
+                </div>
+                <div class="menu-item-price">₦11,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(2).jpg"
+                alt="Love at First Bite"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Love at First Bite</div>
+                <div class="menu-item-desc">
+                  Cinnamon French Toast with Eggs
+                </div>
+                <div class="menu-item-price">₦7,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(5).jpg"
+                alt="Pancakes & Syrup"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Pancakes & Syrup</div>
+                <div class="menu-item-desc">Buttermilk pancakes with syrup</div>
+                <div class="menu-item-price">₦6,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/plate-food-with-plate-chicken-waffles_658005-974.jpg"
+                alt="Waffles & Chicken"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Waffles & Chicken</div>
+                <div class="menu-item-desc">Laid with tomato sauce</div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://c.stocksy.com/a/RAo100/z9/431175.jpg"
+                alt="Waffles & Syrup"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Waffles & Syrup</div>
+                <div class="menu-item-desc">
+                  Crispy waffles with sweet syrup
+                </div>
+                <div class="menu-item-price">₦6,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(6).jpg"
+                alt="Yam & Egg"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Yam & Egg</div>
+                <div class="menu-item-desc">Boiled yam with egg corn-beef</div>
+                <div class="menu-item-price">₦9,500</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PASTA -->
+        <div id="pasta" class="category-section">
+          <h2 class="category-title">🍝 Pasta</h2>
+          <p class="category-desc">
+            Handmade pasta dishes prepared fresh daily
+          </p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(7).jpg"
+                alt="Lasagne"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Lasagne</div>
+                <div class="menu-item-desc">
+                  Layered pasta with rich sauce and cheese
+                </div>
+                <div class="menu-item-price">₦15,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(14).jpg"
+                alt="Linguine/Penne"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Linguine/Penne</div>
+                <div class="menu-item-desc">Classic Italian pasta styles</div>
+                <div class="menu-item-price">₦12,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(8).jpg"
+                alt="Mac n Cheese"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Mac n Cheese</div>
+                <div class="menu-item-desc">
+                  Creamy macaroni with melted cheese
+                </div>
+                <div class="menu-item-price">₦15,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN DISHES -->
+        <div id="main" class="category-section">
+          <h2 class="category-title">🍖 Main Dishes</h2>
+          <p class="category-desc">
+            Our signature main courses - hearty and satisfying
+          </p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(12).jpg"
+                alt="Asun Fried Rice"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Asun Fried Rice</div>
+                <div class="menu-item-desc">
+                  Fried rice with spicy meat pieces
+                </div>
+                <div class="menu-item-price">₦14,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(9).jpg"
+                alt="Chicken Pot Pie"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chicken Pot Pie</div>
+                <div class="menu-item-desc">
+                  Chicken, mushroom, potatoes with white sauce & crust
+                </div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(10).jpg"
+                alt="Crispy Chicken & Fries"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Crispy Chicken & Fries</div>
+                <div class="menu-item-desc">
+                  Battered Chicken Finger & Fries
+                </div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(11).jpg"
+                alt="Fried Croaker Delight"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Fried Croaker Delight</div>
+                <div class="menu-item-desc">
+                  Fried croaker fish with yam fries and pepper sauce
+                </div>
+                <div class="menu-item-price">₦15,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://livelifelean.co.uk/wp-content/uploads/2016/05/Live-Life-Lean-Tilapia-Fish-meal-plated1-035-1240x826.jpg"
+                alt="Grilled Tilapia Fish"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Grilled Tilapia Fish</div>
+                <div class="menu-item-desc">
+                  Battered white fish with fried Irish potato
+                </div>
+                <div class="menu-item-price">₦18,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(16).jpg"
+                alt="HC Special Fried Rice"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">HC Special Fried Rice</div>
+                <div class="menu-item-desc">
+                  Prawns, shredded chicken/beef, sweet corn, kidney beans
+                </div>
+                <div class="menu-item-price">₦16,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(13).jpg"
+                alt="HC Stir Fry Porridge"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">HC Stir Fry Porridge</div>
+                <div class="menu-item-desc">
+                  Traditional porridge with stir-fried ingredients
+                </div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://i1.wp.com/littleapplethaifood.com/wp-content/uploads/2021/05/img_0145.jpg?resize=2048%2C1536&amp;ssl=1"
+                alt="HC Stir Vegetable"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">HC Stir Vegetable</div>
+                <div class="menu-item-desc">
+                  Mushroom, Bell pepper, Carrot, Cabbage with protein
+                </div>
+                <div class="menu-item-price">₦11,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(15).jpg"
+                alt="Seafood Boil"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Seafood Boil</div>
+                <div class="menu-item-desc">
+                  Mixed seafood boiled to perfection
+                </div>
+                <div class="menu-item-price">₦42,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/023/033/632/large_2x/chinese-fried-rice-food-photo.jpeg"
+                alt="Special Chinese Rice"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Special Chinese Rice</div>
+                <div class="menu-item-desc">
+                  Premium fried rice with seasonal ingredients
+                </div>
+                <div class="menu-item-price">₦14,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://thecozycook.com/wp-content/uploads/2022/12/Steak-with-Gravy-f.jpg"
+                alt="Steak with Gravy"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Steak with Gravy</div>
+                <div class="menu-item-desc">
+                  With mashed potato, fries, or rice
+                </div>
+                <div class="menu-item-price">₦18,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAxL3Jhd3BpeGVsX29mZmljZV8zM19hX3Bob3RvX29mX2NoaWNrZW5fc3Rpcl9mcmllZF9yaWNlX19kZWxpY2lvdV8wZmFkNDIxNy0yNjZjLTQ1MDYtOTc5Ni01OGY3NjhhZDI3MmVfMS5qcGc.jpg"
+                alt="Stir Fried Rice"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Stir Fried Rice</div>
+                <div class="menu-item-desc">
+                  Wok-tossed rice with mixed vegetables
+                </div>
+                <div class="menu-item-price">₦12,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://outgrilling.com/wp-content/uploads/2022/02/Meal-Prep-Chicken-Grilled-Image-F.jpg"
+                alt="Texan BBQ Chicken"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Texan BBQ Chicken</div>
+                <div class="menu-item-desc">
+                  Chicken marinated in homemade tomato sauce
+                </div>
+                <div class="menu-item-price">₦12,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BURGERS -->
+        <div id="burgers" class="category-section">
+          <h2 class="category-title">🍔 Burgers</h2>
+          <p class="category-desc">Juicy burgers served with crispy fries</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/grilled-burger-french-fries-food-grilled-beef-burger-with-fries-cheese-tomato_1163725-433.jpg?w=2000"
+                alt="Beef Burger"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Beef Burger</div>
+                <div class="menu-item-desc">Juicy beef patty with fries</div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(18).jpg"
+                alt="Chicken Burger"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chicken Burger</div>
+                <div class="menu-item-desc">
+                  Grilled chicken patty with fries
+                </div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://isokko.com/m/media/upload/photos/2025/06/doubleburger_685a933367be2.jpg"
+                alt="Double Beef"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Double Beef</div>
+                <div class="menu-item-desc">Double beef patties with fries</div>
+                <div class="menu-item-price">₦12,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(19).jpg"
+                alt="Avocado Salad"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Avocado Salad</div>
+                <div class="menu-item-desc">
+                  Fresh greens with creamy avocado
+                </div>
+                <div class="menu-item-price">₦12,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://images.rawpixel.com/image_social_square/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAyL3Jhd3BpeGVsb2ZmaWNlNl9waG90b19vZl9jYWVzYXJfc2FsYWRfYm93bF90b3Bfdmlld19pc29sYXRlZF9vbl81NDhhOTI0NS00ZmM3LTRhZTMtODZhOC1hYmJlOGQyNThjOGVfMS5qcGc.jpg"
+                alt="Caesar Salad"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Caesar Salad</div>
+                <div class="menu-item-desc">
+                  Crisp romaine with parmesan and croutons
+                </div>
+                <div class="menu-item-price">₦12,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://126712712.cdn6.editmysite.com/uploads/1/2/6/7/126712712/s576934016722997991_p1577_i1_w750.jpeg"
+                alt="Garden Salad"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Garden Salad</div>
+                <div class="menu-item-desc">Mixed fresh vegetables</div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WRAPS -->
+        <div id="wraps" class="category-section">
+          <h2 class="category-title">🌯 Wraps</h2>
+          <p class="category-desc">
+            Delicious handheld wraps packed with flavor
+          </p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-psd/grilled-meat-veggie-wrap-delicious-street-food_84443-35237.jpg"
+                alt="Asun Wrap"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Asun Wrap</div>
+                <div class="menu-item-desc">
+                  Spicy meat wrap with vegetables
+                </div>
+                <div class="menu-item-price">₦6,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(21).jpg"
+                alt="Chicken & Prawn"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chicken & Prawn</div>
+                <div class="menu-item-desc">Mixed seafood and chicken wrap</div>
+                <div class="menu-item-price">₦10,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(20).jpg"
+                alt="Chicken Wrap"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chicken Wrap</div>
+                <div class="menu-item-desc">
+                  Grilled chicken with fresh vegetables
+                </div>
+                <div class="menu-item-price">₦5,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(22).jpg"
+                alt="Prawns Wrap"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Prawns Wrap</div>
+                <div class="menu-item-desc">
+                  Succulent prawns wrap with veggies
+                </div>
+                <div class="menu-item-price">₦8,500</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOODLES -->
+        <div id="noodles" class="category-section">
+          <h2 class="category-title">🍜 Noodles Soup (Japanese Style)</h2>
+          <p class="category-desc">Authentic Japanese-style noodle soups</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(23).jpg"
+                alt="Beef Noodle"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Beef Noodle</div>
+                <div class="menu-item-desc">
+                  Premium noodles in rich beef broth
+                </div>
+                <div class="menu-item-price">₦14,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAyL2Rlc2lnbndpdGhtZTA5X3Bob3RvX29mX2FfYm93bF9vZl9jaGlja2VuX25vb2RsZXNfb25fYV93aGl0ZV9iYV9iZDhlOGE1ZC01ZjMwLTRiYmEtYWQwZS04MThhYTkyNGEyMDYuanBn.jpg"
+                alt="Chicken Noodles"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chicken Noodles</div>
+                <div class="menu-item-desc">Tender chicken in savory broth</div>
+                <div class="menu-item-price">₦14,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(24).jpg"
+                alt="Indomie Noodles"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Indomie Noodles</div>
+                <div class="menu-item-desc">
+                  Classic instant noodles prepared fresh
+                </div>
+                <div class="menu-item-price">₦5,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://cdn.pixabay.com/photo/2021/10/21/12/48/beef-6729017_960_720.jpg"
+                alt="Prawn & Beef Noodles"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Prawn & Beef Noodles</div>
+                <div class="menu-item-desc">
+                  Mixed seafood and beef noodle soup
+                </div>
+                <div class="menu-item-price">₦19,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/bowl-thai-food-with-bowl-prawn-noodles_865967-24040.jpg"
+                alt="Prawn & Chicken Noodles"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Prawn & Chicken Noodles</div>
+                <div class="menu-item-desc">
+                  Seafood and chicken combination
+                </div>
+                <div class="menu-item-price">₦19,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="http://thefooddetective.weebly.com/uploads/6/6/8/6/6686893/7977725_orig.jpg"
+                alt="Prawn Noodle"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Prawn Noodle</div>
+                <div class="menu-item-desc">
+                  Succulent prawns in flavorful broth
+                </div>
+                <div class="menu-item-price">₦16,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIDES -->
+        <div id="sides" class="category-section">
+          <h2 class="category-title">🍟 Sides</h2>
+          <p class="category-desc">Perfect complements to your main dish</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://dishanddelights.com/wp-content/uploads/2025/06/Design-sans-titre-2025-06-07T215255.359.jpg"
+                alt="Bacon"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Bacon</div>
+                <div class="menu-item-desc">Crispy bacon strips</div>
+                <div class="menu-item-price">₦3,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://d2gg9evh47fn9z.cloudfront.net/1600px_COLOURBOX2916330.jpg"
+                alt="Chicken Wings"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chicken Wings</div>
+                <div class="menu-item-desc">Delicious seasoned wings</div>
+                <div class="menu-item-price">₦7,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://storage.needpix.com/rsynced_images/crispy-fried-chicken.jpg"
+                alt="Crispy Chicken"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Crispy Chicken</div>
+                <div class="menu-item-desc">Perfectly fried chicken pieces</div>
+                <div class="menu-item-price">₦5,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/fried-egg-with-fried-egg-side_662214-506923.jpg"
+                alt="Egg"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Egg</div>
+                <div class="menu-item-desc">Cooked to your preference</div>
+                <div class="menu-item-price">₦1,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/gourmet-grilled-beef-slices-hot-plate_1098083-9606.jpg"
+                alt="Extra Beef"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Extra Beef</div>
+                <div class="menu-item-desc">Additional beef portion</div>
+                <div class="menu-item-price">₦4,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://st.focusedcollection.com/8860618/i/1800/focused_124203392-stock-photo-bread-slices-in-a-basket.jpg"
+                alt="Extra Bread"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Extra Bread</div>
+                <div class="menu-item-desc">Fresh bread slice</div>
+                <div class="menu-item-price">₦500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/slices-cheese-board_529751-45.jpg"
+                alt="Extra Cheese"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Extra Cheese</div>
+                <div class="menu-item-desc">Extra melted cheese</div>
+                <div class="menu-item-price">₦3,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX2221689.jpg"
+                alt="Extra Chicken"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Extra Chicken</div>
+                <div class="menu-item-desc">Additional chicken portion</div>
+                <div class="menu-item-price">₦4,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://image.shutterstock.com/z/stock-photo-concept-mediterranean-food-plate-of-grilled-prawns-and-a-glass-of-cold-beer-2125443512.jpg"
+                alt="Extra Prawns"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Extra Prawns</div>
+                <div class="menu-item-desc">Additional prawns</div>
+                <div class="menu-item-price">₦7,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/download%20(17).jpg"
+                alt="Fried Rice"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Fried Rice</div>
+                <div class="menu-item-desc">Golden fried rice portion</div>
+                <div class="menu-item-price">₦4,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://4.bp.blogspot.com/-fBXV-ybg5Qk/UmUC7eCpXUI/AAAAAAAABus/EFzlwJAt6VQ/s1600/fried+yams+dundun+nigerian+yam+recipe.JPG"
+                alt="Fried Yam"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Fried Yam</div>
+                <div class="menu-item-desc">Crispy fried yam slices</div>
+                <div class="menu-item-price">₦4,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/satisfying-side-dish-crispy-french-fries-best-fast-food-french-fries-picture-photography_1020697-131472.jpg"
+                alt="Fries"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Fries</div>
+                <div class="menu-item-desc">Golden crispy fries</div>
+                <div class="menu-item-price">₦3,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://i.pinimg.com/originals/a3/47/07/a34707916a40387260a481e860a2b7bf.jpg"
+                alt="Grilled Chicken"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Grilled Chicken</div>
+                <div class="menu-item-desc">Healthy grilled chicken</div>
+                <div class="menu-item-price">₦7,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/bowl-food-with-bowl-dip-bowl-dip_662214-54115.jpg"
+                alt="Pepper Sauce"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Pepper Sauce</div>
+                <div class="menu-item-desc">Spicy pepper sauce</div>
+                <div class="menu-item-price">₦1,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.17milepostja.com/wp-content/uploads/2020/05/rectangle-fried-plantains.jpg"
+                alt="Plantain"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Plantain</div>
+                <div class="menu-item-desc">Fried plantain slices</div>
+                <div class="menu-item-price">₦1,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://image.shutterstock.com/z/stock-photo-boiled-rice-in-a-bowl-on-gray-background-1448187623.jpg"
+                alt="White Rice"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">White Rice</div>
+                <div class="menu-item-desc">Plain steamed rice</div>
+                <div class="menu-item-price">₦3,500</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BEVERAGES -->
+        <div id="beverage" class="category-section">
+          <h2 class="category-title">☕ Beverages</h2>
+          <p class="category-desc">Hot and cold beverages to refresh you</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://cdn.pixabay.com/photo/2015/05/07/13/46/cappuccino-756490_1280.jpg"
+                alt="Cappuccino"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Cappuccino</div>
+                <div class="menu-item-desc">
+                  Creamy espresso and steamed milk
+                </div>
+                <div class="menu-item-price">₦4,200</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.roastycoffee.com/wp-content/uploads/Caramel-Cappuccino-1280x920.jpg"
+                alt="Caramel Macchiato"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Caramel Macchiato</div>
+                <div class="menu-item-desc">Espresso with caramel and milk</div>
+                <div class="menu-item-price">₦5,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://cdn.pixabay.com/photo/2015/10/07/05/47/chai-975685_960_720.jpg"
+                alt="Chai Tea"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chai Tea</div>
+                <div class="menu-item-desc">Aromatic spiced tea</div>
+                <div class="menu-item-price">₦4,200</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://i.etsystatic.com/25778130/c/1362/1362/149/62/il/7cff21/6957938560/il_800x800.6957938560_m2uw.jpg"
+                alt="Espresso"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Espresso</div>
+                <div class="menu-item-desc">Strong black espresso shot</div>
+                <div class="menu-item-price">₦2,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://cdn0.woolworths.media/content/wowproductimages/large/238877.jpg"
+                alt="Frappuccino"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Frappuccino</div>
+                <div class="menu-item-desc">Iced coffee blended drink</div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://images.rawpixel.com/image_social_portrait/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAxL3Jhd3BpeGVsX29mZmljZV80N19hX211Z19vZl9ob3RfY2hvY29sYXRlX2lzX3NldF9vbl90b3Bfb2ZfYV90YV9hZGNmYjI5Ni1mYWMyLTQxYTQtOWRjNy1kZTExOWFhMjMyZDlfMS5qcGc.jpg"
+                alt="Hot Chocolate"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Hot Chocolate</div>
+                <div class="menu-item-desc">Rich and creamy hot chocolate</div>
+                <div class="menu-item-price">₦4,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://c.stocksy.com/a/dYk000/z9/178971.jpg"
+                alt="Mint Tea"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Mint Tea</div>
+                <div class="menu-item-desc">
+                  Banana, Blueberries, yoghurt, granola, coconut
+                </div>
+                <div class="menu-item-price">₦4,200</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.pjscoffee.com/uploads/mocha-latte.jpg"
+                alt="Mocha Latte"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Mocha Latte</div>
+                <div class="menu-item-desc">
+                  Espresso with chocolate and milk
+                </div>
+                <div class="menu-item-price">₦5,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://pixnio.com/free-images/2017/05/23/2017-05-23-15-51-22-960x602.jpg"
+                alt="Tea"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Tea</div>
+                <div class="menu-item-desc">Classic hot tea</div>
+                <div class="menu-item-price">₦4,200</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.pjscoffee.com/uploads/cafe-lattejpg.jpg"
+                alt="Vanilla Latte"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Vanilla Latte</div>
+                <div class="menu-item-desc">Smooth vanilla espresso drink</div>
+                <div class="menu-item-price">₦5,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="http://pinchofyummy.com/assets/images/1736886897058-4x9olaqa.webp"
+                alt="White Chocolate"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">White Chocolate</div>
+                <div class="menu-item-desc">Creamy white chocolate drink</div>
+                <div class="menu-item-price">₦4,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DRINKS -->
+        <div id="drinks" class="category-section">
+          <h2 class="category-title">🍹 Drinks</h2>
+          <p class="category-desc">Alcoholic and non-alcoholic drinks</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://jinjalagos.com/wp-content/uploads/2024/09/WhatsApp-Image-2025-02-09-at-1.23.20-PM.jpeg"
+                alt="Baileys Shot"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Baileys Shot</div>
+                <div class="menu-item-desc">Smooth Bailey's Irish Cream</div>
+                <div class="menu-item-price">₦2,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://pixnio.com/free-images/food-and-drink/beer/beer-glass-850x1133.jpg"
+                alt="Beer"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Beer</div>
+                <div class="menu-item-desc">Cold beer on tap</div>
+                <div class="menu-item-price">₦2,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://punchdrink.com/wp-content/uploads/2025/07/Social-Chapman-Nigerian-Cocktail.jpg"
+                alt="Chapman Special"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Chapman Special</div>
+                <div class="menu-item-desc">
+                  Refreshing Nigerian special drink
+                </div>
+                <div class="menu-item-price">₦6,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://as2.ftcdn.net/v2/jpg/07/92/25/27/1000_F_792252708_3yHqmG96LqfghsIsSPD2nPIP3V3Yt0PW.jpg"
+                alt="Coke"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Coke</div>
+                <div class="menu-item-desc">Ice-cold soft drink</div>
+                <div class="menu-item-price">₦1,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://d250xtg4d8ngkd.cloudfront.net/public/categories/lemon-lime-soda-ranked.webp"
+                alt="Fanta / Sprite"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Fanta / Sprite</div>
+                <div class="menu-item-desc">Refreshing soda options</div>
+                <div class="menu-item-price">₦1,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://d3f6dmtmq6vtdc.cloudfront.net/images/VTJGc2RHVmtYMS9DSTJQOE84MHc4OVllY09Rc2d5Y0QyV0EyNys5MlByaz0=.png?width=1200&amp;height=1200&amp;format=webp"
+                alt="Flyish Fish"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Flyish Fish</div>
+                <div class="menu-item-desc">Energy drink</div>
+                <div class="menu-item-price">₦2,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.hiresociety.com.au/wp-content/uploads/2023/09/1299-1.jpg"
+                alt="Gin Shot"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Gin Shot</div>
+                <div class="menu-item-desc">Classic gin shot</div>
+                <div class="menu-item-price">₦2,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://d2gg9evh47fn9z.cloudfront.net/1600px_COLOURBOX32071538.jpg"
+                alt="Ginger Tea"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Ginger Tea</div>
+                <div class="menu-item-desc">Warm ginger infusion</div>
+                <div class="menu-item-price">₦4,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://i.pinimg.com/736x/57/cd/dd/57cddd925ee9c23164c2cfb69faf0e92.jpg"
+                alt="HC Virgin Mojito"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">HC Virgin Mojito</div>
+                <div class="menu-item-desc">Refreshing mint mojito</div>
+                <div class="menu-item-price">₦5,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://get.pxhere.com/photo/glass-cup-drink-bottle-alcohol-cocktail-glass-bottle-whiskey-whisky-liqueur-the-drink-alcoholic-beverage-beer-glass-distilled-beverage-drinkware-941471.jpg"
+                alt="Jameson Shot"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Jameson Shot</div>
+                <div class="menu-item-desc">Premium Irish whiskey</div>
+                <div class="menu-item-price">₦3,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://pixnio.com/free-images/2017/04/23/2017-04-23-09-52-14-576x654.jpg"
+                alt="Juice"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Juice</div>
+                <div class="menu-item-desc">Fresh fruit juice</div>
+                <div class="menu-item-price">₦3,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://naijamart.co.za/wp-content/uploads/2017/06/Maltina-Classic-Malt-Drink-Bottle-5-800x800.png"
+                alt="Malt Can / Pet"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Malt Can / Pet</div>
+                <div class="menu-item-desc">Refreshing malt drink</div>
+                <div class="menu-item-price">₦1,300</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAxL3Jhd3BpeGVsX29mZmljZV8yNF8xOTgwc192aW50YWdlX3NjaS1maV9maWN0aW9uX2FydF9zdHlsZV9vZl9hX184NDZmZWExYi1kMDk5LTQ0OTItOTQ1Yi1mZmNmYTBlOWM1NjBfMS5qcGc.jpg"
+                alt="Regular Whiskey"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Regular Whiskey</div>
+                <div class="menu-item-desc">Premium whiskey shot</div>
+                <div class="menu-item-price">₦3,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.creativefabrica.com/wp-content/uploads/2022/09/02/Tequila-shot-engraving-Drink-glass-with-Graphics-37632340-1-580x387.png"
+                alt="Tequila Shot"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Tequila Shot</div>
+                <div class="menu-item-desc">Classic tequila shot</div>
+                <div class="menu-item-price">₦3,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://img.freepik.com/premium-photo/three-glass-vodka-isolated-white_392895-323292.jpg?semt=ais_hybrid&amp;w=740&amp;q=80"
+                alt="Vodka Shot"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Vodka Shot</div>
+                <div class="menu-item-desc">Premium vodka shot</div>
+                <div class="menu-item-price">₦2,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://irp.cdn-website.com/bb06ccb8/dms3rep/multi/water+bottles.jpg"
+                alt="Water"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Water</div>
+                <div class="menu-item-desc">Pure drinking water</div>
+                <div class="menu-item-price">₦500</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SANDWICHES -->
+        <div id="sandwich" class="category-section">
+          <h2 class="category-title">🥪 Sandwiches</h2>
+          <p class="category-desc">Hearty sandwiches packed with flavor</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://goodrealfood.com/wp-content/uploads/2025/05/grilled-cheese-1024x975.jpg"
+                alt="Cheese Melt"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Cheese Melt</div>
+                <div class="menu-item-desc">
+                  Toasted bread with chicken and cheese
+                </div>
+                <div class="menu-item-price">₦5,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.foodandwine.com/thmb/tM060YA0Fd0UALCmPQ-5gGWyBqA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Classic-Club-Sandwich-FT-RECIPE0523-99327c9c87214026b9419b949ee13a9c.jpg"
+                alt="Club Sandwich"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Club Sandwich</div>
+                <div class="menu-item-desc">
+                  Chicken, eggs, tomato, cucumber, lettuce
+                </div>
+                <div class="menu-item-price">₦6,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://yuma.sharkthemes.com/food-blog/wp-content/uploads/sites/24/2022/08/pexels-jeswin-thomas-5292918-1.jpg"
+                alt="Grilled Chicken Sandwich"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Grilled Chicken Sandwich</div>
+                <div class="menu-item-desc">
+                  Toasted bread with grilled chicken
+                </div>
+                <div class="menu-item-price">₦7,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.spendwithpennies.com/wp-content/uploads/2023/10/Turkey-Sandwich-SpendWithPennies-4.jpg"
+                alt="Grilled Turkey Sandwich"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Grilled Turkey Sandwich</div>
+                <div class="menu-item-desc">
+                  Toasted bread with grilled turkey
+                </div>
+                <div class="menu-item-price">₦8,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://cdn.pixabay.com/photo/2014/11/11/10/21/shrimp-526600_1280.jpg"
+                alt="Prawn Sandwich"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Prawn Sandwich</div>
+                <div class="menu-item-desc">
+                  Grilled prawns, eggs, tomatoes, lettuce, cucumber
+                </div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHAKES -->
+        <div id="shakes" class="category-section">
+          <h2 class="category-title">🥤 Shakes</h2>
+          <p class="category-desc">Delicious milkshakes and smoothies</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://www.lovefromtheoven.com/wp-content/uploads/2023/02/strawberry-milkshake-24.jpg"
+                alt="Milk Shakes"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Milk Shakes</div>
+                <div class="menu-item-desc">
+                  Oreos, strawberry, vanilla, chocolate, mango
+                </div>
+                <div class="menu-item-price">₦10,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://i.pinimg.com/originals/97/fc/8b/97fc8b551159f132bb04d00c6f23462d.jpg"
+                alt="Smoothie"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Smoothie</div>
+                <div class="menu-item-desc">Fresh fruit smoothie blends</div>
+                <div class="menu-item-price">₦8,500</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COCKTAILS -->
+        <div id="cocktails" class="category-section">
+          <h2 class="category-title">🍸 Cocktails</h2>
+          <p class="category-desc">Premium cocktail selections</p>
+          <div class="full-menu-grid">
+            <div class="menu-item-card">
+              <img
+                src="https://foodiosity.com/wp-content/uploads/2023/01/gin-tonic-2-960x960.jpg"
+                alt="Gin and Tonic"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Gin and Tonic</div>
+                <div class="menu-item-desc">Classic gin and tonic cocktail</div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://cocktaillab.org/sites/default/files/styles/600x600/public/recipe_images/long_island_ice_tea_cocktail.jpg?itok=SBHa8rvV"
+                alt="Long Island"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Long Island</div>
+                <div class="menu-item-desc">Popular mixed cocktail</div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="image(2)/juice.jpg "
+                alt="Screw Driver"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Screw Driver</div>
+                <div class="menu-item-desc">Vodka and orange juice</div>
+                <div class="menu-item-price">₦8,500</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://www.foodanddrinkrecipes.com/wp-content/uploads/tequila-sunrise-667x375.jpg"
+                alt="Tequila Sunrise"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Tequila Sunrise</div>
+                <div class="menu-item-desc">Beautiful tequila sunrise</div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+            <div class="menu-item-card">
+              <img
+                src="https://b3331843.smushcdn.com/3331843/wp-content/uploads/whiskey-sour-2-1-768x432.jpg?lossy=2&amp;strip=1&amp;webp=1"
+                alt="Whiskey Sour"
+                class="menu-item-image"
+              />
+              <div class="menu-item-content">
+                <div class="menu-item-name">Whiskey Sour</div>
+                <div class="menu-item-desc">Classic whiskey sour</div>
+                <div class="menu-item-price">₦9,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        &copy; 2026 Arami Cafe &mdash; 55 Adeniran Ogunsanya St, Surulere, Lagos
+        &nbsp;|&nbsp; Cozy &middot; Serene &middot; Lagos
+      </p>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 20);
+      });
+
+      const hamburger = document.getElementById("hamburgerBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (hamburger && mobileMenu) {
+        hamburger.addEventListener("click", () => {
+          mobileMenu.classList.toggle("open");
+        });
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () =>
+            mobileMenu.classList.remove("open"),
+          );
+        });
+      }
+
+      // Update active category button on scroll
+      const categoryBtns = document.querySelectorAll(".category-btn");
+      const sections = document.querySelectorAll(".category-section");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (scrollY >= sectionTop - 250) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        categoryBtns.forEach((btn) => {
+          btn.classList.remove("active");
+          if (btn.getAttribute("href") === "#" + current) {
+            btn.classList.add("active");
+          }
+        });
+      });
+
+      // Add "Add to Cart" buttons to all menu items
+      function initializeMenuButtons() {
+        const menuCards = document.querySelectorAll(".menu-item-card");
+
+        menuCards.forEach((card) => {
+          // Check if button already exists
+          if (card.querySelector(".add-to-cart-btn")) {
+            return;
+          }
+
+          const nameEl = card.querySelector(".menu-item-name");
+          const priceEl = card.querySelector(".menu-item-price");
+          const contentEl = card.querySelector(".menu-item-content");
+
+          if (!nameEl || !priceEl || !contentEl) return;
+
+          const itemName = nameEl.textContent.trim();
+          const priceText = priceEl.textContent.trim();
+          const priceNum = parseFloat(
+            priceText.replace(/[^0-9.,]/g, "").replace(",", ""),
+          );
+
+          // Create footer container if it doesn't exist
+          let footer = card.querySelector(".menu-item-footer");
+          if (!footer) {
+            footer = document.createElement("div");
+            footer.className = "menu-item-footer";
+
+            // Move price into footer
+            const priceCopy = priceEl.cloneNode(true);
+            priceEl.remove();
+            footer.appendChild(priceCopy);
+
+            // Create and add button
+            const btn = document.createElement("button");
+            btn.className = "add-to-cart-btn";
+            btn.setAttribute("data-name", itemName);
+            btn.setAttribute("data-price", priceNum);
+            btn.textContent = "Add to Cart";
+
+            btn.addEventListener("click", function (e) {
+              e.preventDefault();
+              addToCart({
+                id: itemName + "-" + priceNum,
+                name: itemName,
+                price: priceNum,
+                quantity: 1,
+              });
+
+              // Show toast notification
+              showToast(itemName + " added to cart!");
+            });
+
+            footer.appendChild(btn);
+            contentEl.appendChild(footer);
+          }
+        });
+      }
+
+      // Toast notification function
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.style.cssText = `
+          position: fixed;
+          bottom: 2rem;
+          right: 2rem;
+          background: var(--crust-gold);
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          z-index: 1000;
+          animation: slideIn 0.3s ease;
+          max-width: 300px;
+        `;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.style.animation = "slideOut 0.3s ease";
+          setTimeout(() => toast.remove(), 300);
+        }, 2000);
+      }
+
+      // Add animations to document
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(400px); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(400px); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Initialize when page loads
+      document.addEventListener("DOMContentLoaded", initializeMenuButtons);
+      window.addEventListener("load", initializeMenuButtons);
+
+      // Also run immediately in case DOM is ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializeMenuButtons);
+      } else {
+        initializeMenuButtons();
+      }
+    </script>
+  </body>
+</html>

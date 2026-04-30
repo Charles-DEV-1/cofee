@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Shopping Cart | Arami Cafe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #fdf9f2;
+        --cream: #fff9ef;
+        --cream-dark: #f5eddc;
+        --coffee: #6f4e37;
+        --coffee-light: #8b6950;
+        --espresso: #3e2723;
+        --gold: #c8a96e;
+        --gold-dark: #b28b4a;
+        --terra: #e2725b;
+        --text: #2c1a10;
+        --text-muted: #7a6352;
+        --shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 30px 60px rgba(0, 0, 0, 0.1);
+        --success: #10b981;
+        --danger: #ef4444;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      .logo {
+        font-family: "Playfair Display", serif;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(253, 249, 242, 0.94);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(111, 78, 55, 0.12);
+        transition: box-shadow 0.3s;
+      }
+      nav.scrolled {
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+      }
+      .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+      }
+      .logo {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--espresso);
+        letter-spacing: -0.5px;
+        text-decoration: none;
+      }
+      .logo span {
+        color: var(--gold);
+      }
+      .nav-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+      .back-btn {
+        background: var(--coffee);
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 40px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .back-btn:hover {
+        background: var(--espresso);
+      }
+
+      /* Page Header */
+      .page-header {
+        padding: 100px 5% 40px;
+        text-align: center;
+      }
+      .page-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 5% 4rem;
+      }
+
+      /* Cart Grid */
+      .cart-grid {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 2rem;
+      }
+
+      /* Cart Items */
+      .cart-items {
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 2rem;
+      }
+      .empty-cart {
+        text-align: center;
+        padding: 3rem 2rem;
+      }
+      .empty-cart-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+      .empty-cart p {
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+      }
+      .cart-item {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--cream-dark);
+      }
+      .cart-item:last-child {
+        border-bottom: none;
+      }
+      .cart-item-image {
+        width: 100px;
+        height: 100px;
+        background: var(--cream-dark);
+        border-radius: 12px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+      .cart-item-details {
+        flex: 1;
+      }
+      .cart-item-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+      .cart-item-price {
+        color: var(--gold-dark);
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+      }
+      .quantity-selector {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--cream-dark);
+        border-radius: 8px;
+        padding: 0.3rem;
+        width: fit-content;
+      }
+      .qty-btn {
+        width: 28px;
+        height: 28px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--coffee);
+        transition: all 0.2s;
+      }
+      .qty-btn:hover {
+        background: var(--gold);
+        border-radius: 6px;
+      }
+      .qty-value {
+        min-width: 30px;
+        text-align: center;
+        font-weight: 600;
+      }
+      .cart-item-remove {
+        background: var(--danger);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: all 0.2s;
+      }
+      .cart-item-remove:hover {
+        background: #dc2626;
+      }
+
+      /* Cart Summary */
+      .cart-summary {
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+      .summary-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--cream-dark);
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+      }
+      .summary-row.subtotal {
+        color: var(--text-muted);
+      }
+      .summary-row.total {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--coffee);
+        padding-top: 1rem;
+        border-top: 2px solid var(--cream-dark);
+        margin-top: 1rem;
+      }
+      .checkout-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--coffee);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: all 0.3s;
+      }
+      .checkout-btn:hover {
+        background: var(--espresso);
+        transform: translateY(-2px);
+      }
+      .checkout-btn:disabled {
+        background: var(--text-muted);
+        cursor: not-allowed;
+        transform: none;
+      }
+      .continue-shopping {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--cream-dark);
+        color: var(--coffee);
+        border: none;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: all 0.2s;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+      }
+      .continue-shopping:hover {
+        background: var(--gold);
+      }
+
+      footer {
+        background: var(--espresso);
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 249, 239, 0.6);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 900px) {
+        .cart-grid {
+          grid-template-columns: 1fr;
+        }
+        .cart-summary {
+          position: static;
+        }
+      }
+      @media (max-width: 600px) {
+        .page-header h1 {
+          font-size: 1.8rem;
+        }
+        .cart-item {
+          flex-direction: column;
+        }
+        .cart-item-image {
+          width: 80px;
+          height: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="nav-container">
+        <a href="arami.html" class="logo">Arami <span>Cafe</span></a>
+        <div class="nav-actions">
+          <a href="menu.html" class="back-btn">Continue Shopping</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <h1>Your Cart</h1>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="cart-grid">
+        <!-- Cart Items -->
+        <div class="cart-items" id="cartItems">
+          <!-- Items will be populated here -->
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+          <div class="summary-title">Order Summary</div>
+          <div class="summary-row subtotal">
+            <span>Subtotal</span>
+            <span id="subtotal">₦0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Items</span>
+            <span id="itemCount">0</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="total">₦0.00</span>
+          </div>
+          <button class="checkout-btn" id="checkoutBtn" disabled>
+            Proceed to Checkout
+          </button>
+          <a href="menu.html" class="continue-shopping">Continue Shopping</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2026 Arami Cafe &mdash; 55 Adeniran Ogunsanya St, Surulere, Lagos
+        &nbsp;|&nbsp; Cozy &middot; Serene &middot; Lagos
+      </p>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+      function renderCart() {
+        const cart = getCart();
+        const cartItemsContainer = document.getElementById("cartItems");
+        const checkoutBtn = document.getElementById("checkoutBtn");
+
+        if (cart.length === 0) {
+          cartItemsContainer.innerHTML = `
+            <div class="empty-cart">
+              <div class="empty-cart-icon">🛒</div>
+              <p>Your cart is empty</p>
+              <a href="menu.html" class="continue-shopping" style="display: inline-block; margin-top: 1rem;">Browse Menu</a>
+            </div>
+          `;
+          checkoutBtn.disabled = true;
+          updateSummary();
+          return;
+        }
+
+        checkoutBtn.disabled = false;
+
+        cartItemsContainer.innerHTML = cart
+          .map(
+            (item) => `
+          <div class="cart-item">
+            <div class="cart-item-image">🍴</div>
+            <div class="cart-item-details">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">${formatPrice(item.price)}</div>
+              <div class="quantity-selector">
+                <button class="qty-btn" onclick="decreaseQuantity('${item.id}')">−</button>
+                <span class="qty-value">${item.quantity}</span>
+                <button class="qty-btn" onclick="increaseQuantity('${item.id}')">+</button>
+              </div>
+              <button class="cart-item-remove" onclick="removeItem('${item.id}')">
+                Remove
+              </button>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+
+        updateSummary();
+      }
+
+      function increaseQuantity(itemId) {
+        const cart = getCart();
+        const item = cart.find((i) => i.id === itemId);
+        if (item) {
+          item.quantity += 1;
+          saveCart(cart);
+          renderCart();
+        }
+      }
+
+      function decreaseQuantity(itemId) {
+        const cart = getCart();
+        const item = cart.find((i) => i.id === itemId);
+        if (item && item.quantity > 1) {
+          item.quantity -= 1;
+          saveCart(cart);
+          renderCart();
+        }
+      }
+
+      function removeItem(itemId) {
+        removeFromCart(itemId);
+        renderCart();
+      }
+
+      function updateSummary() {
+        const cart = getCart();
+        const total = getCartTotal();
+        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+        document.getElementById("subtotal").textContent = formatPrice(total);
+        document.getElementById("total").textContent = formatPrice(total);
+        document.getElementById("itemCount").textContent = itemCount;
+      }
+
+      document.getElementById("checkoutBtn").addEventListener("click", () => {
+        window.location.href = "checkout.html";
+      });
+
+      // Initial render
+      renderCart();
+
+      // Update navbar on scroll
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 20);
+      });
+    </script>
+  </body>
+</html>
